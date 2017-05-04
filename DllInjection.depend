@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1493889099 source:c:\users\jl-pc-3\desktop\demo\dllinjection\main.cpp
+	<tchar.h>
+	<windows.h>
+	"main.h"
+
+1493885789 c:\users\jl-pc-3\desktop\demo\dllinjection\main.h
+
