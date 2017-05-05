@@ -7,6 +7,7 @@
 #include <tchar.h>
 #include <windows.h>
 #include"main.h"
+#include<Winuser.h>
 
 TCHAR szClassName[ ] = _T("Win");
 
@@ -23,12 +24,14 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
     wincl.lpfnWndProc = WindowProcedure;      /* This function is called by windows */
     wincl.style = CS_DBLCLKS;                 /* Catch double-clicks */
     wincl.cbSize = sizeof (WNDCLASSEX);
-    wincl.hIcon = LoadIcon (NULL, IDI_APPLICATION);
-    wincl.hIconSm = LoadIcon (NULL, IDI_APPLICATION);
+    HICON icon = (HICON)LoadImage(DllInjectinst,TEXT("resource/tlogo.ico"),IMAGE_ICON,0,0,LR_LOADFROMFILE);
+    wincl.hIcon = LoadIcon(NULL,IDC_ICON);
+    wincl.hIconSm = icon;
+    FreeResource(icon);
     wincl.hCursor = LoadCursor (NULL, IDC_ARROW);
     wincl.lpszMenuName = NULL;                 /* No menu */
     wincl.cbClsExtra = 0;                      /* No extra bytes after the window class */
-    wincl.cbWndExtra = 0;                      /* structure or the window instance */
+    wincl.cbWndExtra = 0;
     wincl.hbrBackground = CreateSolidBrush(RGB(255,255,255));
 
     if (!RegisterClassEx (&wincl))
@@ -87,7 +90,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                             ofn.lpstrFile = szFile;
                             ofn.lpstrFile[0] = '\0';
                             ofn.nMaxFile = sizeof(szFile);
-                            ofn.lpstrFilter = "Dll(*.dll)\0*.dll\0All(*.*)\0*.*\0\0";
+                            ofn.lpstrFilter = "Dll files(*.dll)\0*.dll\0All files(*.*)\0*.*\0\0";
                             ofn.nFilterIndex = 1;
                             ofn.lpstrFileTitle = NULL;
                             ofn.lpstrTitle = "Ñ¡Ôñ¶¯Ì¬Á´½Ó¿â";
@@ -100,6 +103,12 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                                 SetWindowText(edit,szFile);
 
                             }
+                            break;
+                        case pbtn:
+
+                            break;
+                        case btnsure:
+
                             break;
                         default:
                             break;
@@ -120,12 +129,19 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 
 void initControl(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
-    HWND edit = CreateWindow("EDIT","",WS_CHILD|WS_VISIBLE|WS_BORDER|ES_MULTILINE|ES_AUTOHSCROLL|ES_READONLY,10,10,300,30,hwnd,(HMENU)edit1,DllInjectinst,NULL);
-    HWND btn = CreateWindow("BUTTON","open",WS_CHILD|WS_VISIBLE|BS_FLAT,325,10,60,30,hwnd,(HMENU)btn1,DllInjectinst,NULL);
+    HWND edit = CreateWindow("EDIT","",WS_CHILD|WS_VISIBLE|WS_BORDER|ES_MULTILINE|ES_AUTOHSCROLL|ES_READONLY,10,60,300,30,hwnd,(HMENU)edit1,DllInjectinst,NULL);
+    HWND btn = CreateWindow("BUTTON","open",WS_CHILD|WS_VISIBLE|BS_FLAT,325,60,60,30,hwnd,(HMENU)btn1,DllInjectinst,NULL);
+    HWND proceedit = CreateWindow("EDIT","",WS_CHILD|WS_VISIBLE|WS_BORDER|ES_MULTILINE|ES_AUTOHSCROLL|ES_READONLY,10,100,300,30,hwnd,(HMENU)pedit,DllInjectinst,NULL);
+    HWND processbtn = CreateWindow("BUTTON","",WS_CHILD|WS_VISIBLE|BS_FLAT,325,100,60,30,hwnd,(HMENU)pbtn,DllInjectinst,NULL);
+    HWND sure = CreateWindow("BUTTON","",WS_CHILD|WS_VISIBLE|BS_FLAT,50,150,295,30,hwnd,(HMENU)btnsure,DllInjectinst,NULL);
     RECT rect;
     GetClientRect(edit,&rect);
     OffsetRect(&rect,6,4);
     SendMessage(edit,EM_SETRECT,0,(LPARAM)&rect);
-}
+    SendMessage(proceedit,EM_SETRECT,0,(LPARAM)&rect);
+    HICON icon;
+    icon = (HICON)LoadImage(NULL,TEXT("process.ico"),IMAGE_ICON,0,0,LR_LOADFROMFILE);
+    SendMessage(processbtn,WM_SETICON,(WPARAM)ICON_SMALL,(LPARAM)icon);
 
+}
 

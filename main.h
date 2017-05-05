@@ -2,10 +2,12 @@
 #define MAIN_H_INCLUDED
 
 #define WinW 400
-#define WinH 200
+#define WinH 250
 #define edit1 1
 #define btn1 2
-
+#define pedit 3
+#define pbtn 4
+#define btnsure 5
 
 
 HINSTANCE DllInjectinst;
